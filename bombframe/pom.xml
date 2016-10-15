@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.will4it</groupId>
+    <artifactId>BombFrame</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>aar</packaging>
+    <name>BombFrame</name>
+
+    <parent>
+        <groupId>com.will4it</groupId>
+        <artifactId>bomb-frame-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <properties>
+        <keystore>bomb_keystore.jks</keystore>
+        <key.store.password>bomb123456</key.store.password>
+        <key.alias>bomb</key.alias>
+        <key.alias.password>bomb123456</key.alias.password>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>android</groupId>
+            <artifactId>android</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!--<plugin>-->
+                <!--<groupId>com.simpligility.maven.plugins</groupId>-->
+                <!--<artifactId>android-maven-plugin</artifactId>-->
+                <!--<configuration>-->
+                    <!--<proguard>-->
+                        <!--<skip>false</skip>-->
+                        <!--<config>proguard-rules.pro</config>-->
+                    <!--</proguard>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-compiler-plugin</artifactId>-->
+                <!--<configuration>-->
+                    <!--<compilerArguments>-->
+                        <!--<extdirs>${frame.path}</extdirs>-->
+                    <!--</compilerArguments>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jarsigner-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <id>signing</id>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <inherited>true</inherited>
+                        <configuration>
+                            <includes>
+                                <include>target/*.aar</include>
+                            </includes>
+                            <keystore>${keystore}</keystore>
+                            <storepass>${key.store.password}</storepass>
+                            <keypass>${key.alias.password}</keypass>
+                            <alias>${key.alias}</alias>
+                            <arguments>
+                                <argument>-sigalg</argument>
+                                <argument>MD5withRSA</argument>
+                                <argument>-digestalg</argument>
+                                <argument>SHA1</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
